@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { slugifyTag } from '../utils/tags';
 
 interface Props {
   frontmatter: {
@@ -24,7 +25,14 @@ const date = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
       ML Explainers <span class="dot">·</span> breaking down the hard stuff
     </div>
     <h1>{frontmatter.title}</h1>
-    <p class="byline">{date}{frontmatter.tags?.length ? ' · ' + frontmatter.tags.join(' · ') : ''}</p>
+    <p class="byline">{date}</p>
+    {frontmatter.tags?.length ? (
+      <div class="post-tags">
+        {frontmatter.tags.map((t) => (
+          <a class="tag tag-link" href={`/tags/${slugifyTag(t)}/`}>#{t}</a>
+        ))}
+      </div>
+    ) : null}
     <div class="prose">
       <slot />
     </div>

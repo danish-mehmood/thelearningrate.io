@@ -178,6 +178,27 @@ a { color: var(--accent); text-underline-offset: 3px; }
   border: 1.5px solid var(--line); border-radius: 14px; padding: 1px 10px;
   color: var(--ink-soft); margin: 10px 6px 0 0;
 }
+/* clickable tag chips */
+a.tag-link {
+  text-decoration: none; cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+}
+a.tag-link:hover,
+a.tag-link:focus-visible {
+  background: var(--accent); border-color: var(--accent); color: var(--panel);
+  transform: rotate(-1.5deg); outline: none;
+}
+.tag .count { color: var(--ink-soft); font-size: .82em; }
+a.tag-link:hover .count,
+a.tag-link:focus-visible .count { color: var(--panel); }
+
+/* tag index ("tag cloud") */
+.tag-cloud { list-style: none; padding: 0; margin: 1.6em 0 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.tag-cloud .tag { margin: 0; font-size: 1.05rem; padding: 3px 14px; }
+
+/* tag row under a post title */
+.post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 1.8em; }
+.post-tags .tag { margin: 0; }
 
 /* ---- footer ---- */
 footer.site-foot {
