@@ -1,26 +1,33 @@
 # The Learning Rate
 
-A hand-drawn / illustrated ML explainer blog, built with **Astro + React islands + rough.js**.
+A hand-drawn, illustrated blog for breaking down the hard parts of machine learning —
+sketchy diagrams, little animations, and as little jargon as it can get away with.
 
-## Run it
+Built with **[Astro](https://astro.build/)** (static, fast, zero-JS by default),
+**React islands** for the interactive bits, and **[rough.js](https://roughjs.com/)**
+for the hand-drawn look.
+
+## Quick start
 
 ```bash
 npm install
 npm run dev      # local dev at http://localhost:4321
 npm run build    # static build into dist/
-npm run preview  # preview the build
+npm run preview  # preview the production build
 ```
+
+Requires [Node.js](https://nodejs.org/) 18 or newer.
 
 ## How it's organized
 
 ```
 src/
-  styles/global.css          ← the whole visual identity lives here (tokens at the top)
-  content.config.ts          ← blog post schema (title, description, pubDate, tags, draft)
-  content/posts/*.mdx        ← your posts; write Markdown + drop in components
+  styles/global.css          ← the whole visual identity (design tokens at the top)
+  content.config.ts          ← post schema (title, description, pubDate, tags, draft)
+  content/posts/*.mdx        ← the posts — Markdown with components dropped in
   components/
     LossCurve.tsx            ← React island: sketchy diagram with a rolling ball
-    Annotate.tsx             ← React island: self-drawing underline/circle/etc.
+    Annotate.tsx             ← React island: self-drawing underline / circle / etc.
     Figure.astro             ← captioned card with a sketched border
     MarginNote.astro         ← rotated aside with a sketched border
   layouts/
@@ -50,11 +57,15 @@ import Annotate from '../../components/Annotate.tsx';
 Plain Markdown, plus <Annotate client:visible type="circle">a circled phrase</Annotate>.
 ```
 
-Interactive components need a `client:*` directive (`client:visible` is a good default).
+Interactive components need a `client:*` directive — `client:visible` is a good default.
 
-## Make it yours
+## Making it yours
 
-- **Colors / fonts:** edit the tokens at the top of `src/styles/global.css`.
-- **New diagram types:** copy `LossCurve.tsx` as a starting point — it shows the rough.js +
-  theme-aware + replay pattern.
-- **Sketchy borders:** add `data-sketch-frame` to any element.
+- **Colors & fonts** — edit the design tokens at the top of `src/styles/global.css`.
+- **New diagram types** — copy `LossCurve.tsx`; it shows the rough.js + theme-aware +
+  replay pattern.
+- **Sketchy borders** — add `data-sketch-frame` to any element.
+
+## License
+
+© The Learning Rate. All rights reserved.
