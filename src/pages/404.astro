@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Out of Distribution" description="This page is nowhere in the training data.">
+  <section class="nf">
+    <div class="nf-code">404</div>
+    <h1>You're out of distribution.</h1>
+    <p class="lede">
+      The model never saw this page in training, so it has no idea what to do with you.
+      Statistically speaking, you're an outlier.
+    </p>
+
+    <figure class="nf-fig" data-sketch-frame>
+      <svg viewBox="0 0 440 200" role="img"
+           aria-label="A bell curve with sample points clustered beneath it, and a single stray point far out in the tail labelled 'you are here'.">
+        <!-- baseline -->
+        <path d="M20 160 Q 220 162 420 160" stroke="var(--ink-soft)" stroke-width="2.2" fill="none" />
+
+        <!-- the familiar bell, where everything normal lives -->
+        <path d="M48 160 C 96 160 116 54 158 48 C 200 54 220 160 268 160"
+              stroke="var(--ink)" stroke-width="3" fill="none" />
+        <path d="M49 160.5 C 97 159.3 117 56.5 158 50.3 C 199 56.5 219 159.3 267 160.5"
+              stroke="var(--ink)" stroke-width="1.6" opacity="0.5" fill="none" />
+
+        <!-- in-distribution samples -->
+        <g fill="var(--accent2)">
+          <circle cx="104" cy="150" r="4.2" /><circle cx="126" cy="126" r="4.2" />
+          <circle cx="144" cy="98" r="4.2" /><circle cx="158" cy="86" r="4.2" />
+          <circle cx="174" cy="104" r="4.2" /><circle cx="192" cy="132" r="4.2" />
+          <circle cx="212" cy="152" r="4.2" />
+        </g>
+
+        <!-- the label + arrow pointing to the outlier -->
+        <text x="300" y="96" text-anchor="middle" font-family="var(--font-hand)"
+              font-size="19" fill="var(--ink)">you are here</text>
+        <path d="M322 106 Q 360 118 386 148" stroke="var(--ink)" stroke-width="2" fill="none" />
+        <path d="M386 148 L377 145 M386 148 L382 139" stroke="var(--ink)" stroke-width="2" fill="none" />
+
+        <!-- you: a lonely outlier way out in the tail -->
+        <circle class="stray" cx="392" cy="158" r="6.5" fill="var(--accent)" />
+      </svg>
+    </figure>
+
+    <a class="nf-btn" href="/">← take me back to the mean</a>
+  </section>
+
+  <style>
+    .nf { text-align: center; padding-top: 8px; }
+    .nf-code {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 20vw, 8rem);
+      line-height: 0.9;
+      color: var(--accent);
+      transform: rotate(-2deg);
+    }
+    .nf h1 { margin: 0.1em 0 0.3em; }
+    .nf .lede { max-width: 42ch; margin-inline: auto; }
+    .nf-fig {
+      position: relative;
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px 14px 10px;
+      margin: 1.8em auto 1.6em;
+      max-width: 440px;
+      box-shadow: 0 12px 30px -24px rgba(0, 0, 0, 0.55);
+    }
+    .nf-fig svg { display: block; width: 100%; height: auto; }
+    .stray {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: nf-bob 2.2s ease-in-out infinite;
+    }
+    @keyframes nf-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .nf-btn {
+      display: inline-block;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      color: var(--accent);
+      background: transparent;
+      border: 1.8px dashed var(--accent);
+      border-radius: 22px;
+      padding: 7px 20px;
+      text-decoration: none;
+      transform: rotate(-0.8deg);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .nf-btn:hover,
+    .nf-btn:focus-visible { background: var(--accent); color: var(--panel); outline: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .stray { animation: none; }
+    }
+  </style>
+</BaseLayout>
