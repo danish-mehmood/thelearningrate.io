@@ -1,0 +1,53 @@
+---
+// The Learning Rate mark: a hand-drawn probability distribution —
+// density bars under a sketchy bell curve, with a dot at the mode.
+// Colors come from CSS tokens, so it follows light/dark automatically.
+interface Props {
+  height?: number;
+  class?: string;
+}
+const { height = 34, class: className = '' } = Astro.props;
+const width = Math.round((height * 68) / 48);
+---
+
+<svg
+  class={className}
+  width={width}
+  height={height}
+  viewBox="0 0 68 48"
+  fill="none"
+  role="img"
+  aria-label="The Learning Rate logo — a probability distribution"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <!-- density bars (the "probability mass") -->
+  <g stroke="var(--accent)" stroke-width="2.4" opacity="0.45">
+    <line x1="16" y1="40" x2="16" y2="37" />
+    <line x1="22" y1="40" x2="22" y2="29" />
+    <line x1="28" y1="40" x2="28" y2="18.5" />
+    <line x1="34" y1="40" x2="34" y2="13" />
+    <line x1="40" y1="40" x2="40" y2="18.5" />
+    <line x1="46" y1="40" x2="46" y2="29" />
+    <line x1="52" y1="40" x2="52" y2="37" />
+  </g>
+
+  <!-- the bell curve, drawn twice with a tiny offset for a sketchy feel -->
+  <path
+    d="M8 40 C 20 40 23 13 34 11 C 45 13 48 40 60 40"
+    stroke="var(--ink)"
+    stroke-width="2.4"
+  />
+  <path
+    d="M9 40.4 C 21 39.3 24 14.6 34 12.2 C 44 14.4 47 39.2 59 40.3"
+    stroke="var(--ink)"
+    stroke-width="1.5"
+    opacity="0.55"
+  />
+
+  <!-- wavy baseline -->
+  <path d="M6 40 Q 20 41.2 34 39.7 T 62 40" stroke="var(--ink-soft)" stroke-width="2" />
+
+  <!-- the mode (a little "learning rate" ball at the peak) -->
+  <circle cx="34" cy="11" r="3.2" fill="var(--accent2)" stroke="var(--bg)" stroke-width="1.2" />
+</svg>

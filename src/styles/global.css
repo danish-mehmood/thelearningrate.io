@@ -70,8 +70,10 @@ body {
 .site-head a.brand {
   font-family: var(--font-display);
   font-size: 2rem; font-weight: 700; color: var(--ink);
-  text-decoration: none; transform: rotate(-1.5deg); display: inline-block;
+  text-decoration: none; transform: rotate(-1.5deg);
+  display: inline-flex; align-items: center; gap: 10px;
 }
+.site-head a.brand svg { flex: none; }
 .site-head nav { display: flex; gap: 16px; font-family: var(--font-hand); }
 .site-head nav a { color: var(--ink-soft); text-decoration: none; }
 .site-head nav a:hover { color: var(--accent); }

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Logo from '../components/Logo.astro';
 
 interface Props {
   title: string;
@@ -13,6 +14,7 @@ const { title, description = 'Breaking down the hard parts of machine learning, 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,7 +27,10 @@ const { title, description = 'Breaking down the hard parts of machine learning, 
   <body>
     <div class="wrap">
       <header class="site-head">
-        <a class="brand" href="/">The Learning Rate</a>
+        <a class="brand" href="/">
+          <Logo height={38} />
+          <span>The Learning Rate</span>
+        </a>
         <nav>
           <a href="/">Home</a>
           <a href="/tags">Tags</a>
