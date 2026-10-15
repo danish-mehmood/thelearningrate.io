@@ -1,16 +1,126 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'rdm355190@gmail.com';
 ---
 
-<BaseLayout title="About" description="Why this blog exists.">
+<BaseLayout title="About" description="Who writes The Learning Rate, and why it exists.">
   <a class="back-link" href="/">← home</a>
-  <h1 style="margin-top:14px;">About this blog</h1>
+  <h1 style="margin-top:14px;">About</h1>
+
+  <!-- Author -->
+  <section class="author-card" data-sketch-frame>
+    <div class="avatar-ring" data-sketch-frame="circle" data-sketch-stroke="--accent">
+      <div class="avatar-wrap">
+        <img src="/avatar.jpg" alt="Danish Mehmood" width="160" height="160" loading="eager" />
+      </div>
+    </div>
+    <div class="author-text">
+      <h2 class="author-name">Danish Mehmood</h2>
+      <p class="author-role">Software engineer · perpetual dabbler</p>
+      <p>
+        I'm a software engineer who can't resist poking at things outside my lane — a new
+        field, a weird tool, an idea I only half understand. The way I actually <em>get</em>
+        something is by writing it down: taking it apart until it makes sense to me, then
+        putting it back together in a way that makes sense to someone else.
+      </p>
+      <p>
+        That's what this blog is — me learning in public, and hopefully teaching a little
+        along the way. If explaining something is the real test of understanding it, then
+        every post here is me sitting the exam.
+      </p>
+      <p class="contact">
+        Say hi · <a href={`mailto:${email}`}>{email}</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <h2>About the blog</h2>
   <p class="lede">
-    This is where I slow down and actually draw the ideas behind machine learning —
-    the ones that usually hide behind a wall of equations.
+    <b>The Learning Rate</b> is a hand-drawn corner of the internet for the hard parts of
+    machine learning.
   </p>
   <p>
-    Each explainer aims for the moment where an abstract concept clicks into something you can
-    picture. Expect hand-drawn diagrams, little animations, and plain language.
+    Every post takes one intimidating idea — usually the kind buried under a wall of
+    equations — and rebuilds it with sketches, small animations, and plain language, right
+    up to the moment it clicks. Less notation, more intuition. The goal is simple: you leave
+    able to <em>picture</em> the thing, not just recite it.
   </p>
+
+  <style>
+    .author-card {
+      position: relative;
+      display: flex;
+      gap: 26px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 24px 24px 20px;
+      margin: 1.6em 0 2.4em;
+      box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.55);
+    }
+
+    .avatar-ring {
+      position: relative;
+      flex: none;
+      padding: 11px;            /* room for the sketched ring to sit outside the photo */
+      border-radius: 50%;
+    }
+    .avatar-wrap {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* warm, blog-themed overlay so the photo blends into the palette */
+    .avatar-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(120% 120% at 30% 15%, transparent 38%,
+          color-mix(in srgb, var(--accent) 55%, transparent) 100%),
+        linear-gradient(160deg,
+          color-mix(in srgb, var(--accent) 22%, transparent),
+          color-mix(in srgb, var(--accent2) 18%, transparent));
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .author-text { flex: 1 1 260px; min-width: 0; }
+    .author-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 7vw, 2.6rem);
+      margin: 0 0 2px;
+      line-height: 1;
+    }
+    .author-role {
+      font-family: var(--font-hand);
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin: 0 0 12px;
+    }
+    .author-text p { margin: 0 0 0.9em; }
+    .contact {
+      font-family: var(--font-hand);
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+    }
+    .contact a { color: var(--accent); text-underline-offset: 3px; word-break: break-all; }
+
+    @media (max-width: 460px) {
+      .author-card { justify-content: center; text-align: center; }
+      .author-text { text-align: left; }
+    }
+  </style>
 </BaseLayout>

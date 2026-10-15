@@ -65,14 +65,27 @@ const { title, description = 'Breaking down the hard parts of machine learning, 
           svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
           svg.innerHTML = '';
           const rc = rough.svg(svg);
-          svg.appendChild(
-            rc.rectangle(3, 3, w - 6, h - 6, {
-              stroke: cssVar('--ink-soft'),
-              strokeWidth: 1.6,
-              roughness: 1.8,
-              bowing: 1.5,
-            })
-          );
+          const shape = host.getAttribute('data-sketch-frame') || 'rect';
+          const stroke = cssVar(host.getAttribute('data-sketch-stroke') || '--ink-soft');
+          if (shape === 'circle') {
+            svg.appendChild(
+              rc.ellipse(w / 2, h / 2, w - 6, h - 6, {
+                stroke,
+                strokeWidth: 2.2,
+                roughness: 1.6,
+                bowing: 1.2,
+              })
+            );
+          } else {
+            svg.appendChild(
+              rc.rectangle(3, 3, w - 6, h - 6, {
+                stroke,
+                strokeWidth: 1.6,
+                roughness: 1.8,
+                bowing: 1.5,
+              })
+            );
+          }
         });
       }
 
