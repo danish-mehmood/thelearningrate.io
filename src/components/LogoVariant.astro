@@ -10,6 +10,14 @@ export const VARIANTS = [
   { id: 'mixture', label: 'mixture of gaussians' },
   { id: 'loss-curve', label: 'loss curve' },
   { id: 'decision-boundary', label: 'decision boundary' },
+  { id: 'integral', label: 'integral (area)' },
+  { id: 'derivative', label: 'derivative (tangent)' },
+  { id: 'vectors', label: 'vectors' },
+  { id: 'matrix', label: 'matrix' },
+  { id: 'linear-transform', label: 'linear transform' },
+  { id: 'box-plot', label: 'box plot' },
+  { id: 'venn', label: 'venn / sets' },
+  { id: 'contours', label: 'contours / gradient' },
 ];
 
 interface Props {
@@ -116,6 +124,86 @@ const width = Math.round((height * 120) / 100);
       <path d="M22 94 C 46 70 70 52 100 24" stroke="var(--ink)" stroke-width="2.6" stroke-dasharray="5 4" />
       <g fill="var(--accent)"><circle cx="28" cy="34" r="3.6" /><circle cx="42" cy="28" r="3.6" /><circle cx="34" cy="50" r="3.6" /><circle cx="52" cy="38" r="3.6" /><circle cx="46" cy="58" r="3.6" /></g>
       <g fill="var(--accent2)"><circle cx="78" cy="84" r="3.6" /><circle cx="90" cy="76" r="3.6" /><circle cx="70" cy="72" r="3.6" /><circle cx="96" cy="62" r="3.6" /><circle cx="82" cy="60" r="3.6" /></g>
+    </g>
+  )}
+
+  {variant === 'integral' && (
+    <g>
+      <g fill="var(--accent)" fill-opacity="0.28" stroke="var(--accent)" stroke-width="1.5">
+        <rect x="24" y="70" width="16" height="16" /><rect x="40" y="58" width="16" height="28" />
+        <rect x="56" y="46" width="16" height="40" /><rect x="72" y="36" width="16" height="50" />
+        <rect x="88" y="28" width="16" height="58" />
+      </g>
+      <path d="M24 72 C 44 66 64 44 104 26" stroke="var(--ink)" stroke-width="2.8" />
+      <line x1="20" y1="86" x2="108" y2="86" stroke="var(--ink-soft)" stroke-width="2" />
+    </g>
+  )}
+
+  {variant === 'derivative' && (
+    <g>
+      <path d="M16 84 C 36 40 84 40 104 84" stroke="var(--accent)" stroke-width="3" />
+      <line x1="56" y1="46" x2="102" y2="74" stroke="var(--ink)" stroke-width="2.4" />
+      <circle cx="80" cy="58" r="6" fill="var(--accent2)" />
+    </g>
+  )}
+
+  {variant === 'vectors' && (
+    <g>
+      <line x1="24" y1="84" x2="96" y2="42" stroke="var(--accent)" stroke-width="3" />
+      <path d="M96 42 L87 42 M96 42 L94 51" stroke="var(--accent)" stroke-width="3" />
+      <line x1="24" y1="84" x2="54" y2="26" stroke="var(--accent2)" stroke-width="3" />
+      <path d="M54 26 L48 32 M54 26 L57 34" stroke="var(--accent2)" stroke-width="3" />
+      <circle cx="24" cy="84" r="2.6" fill="var(--ink)" />
+    </g>
+  )}
+
+  {variant === 'matrix' && (
+    <g>
+      <path d="M30 26 L20 26 L20 86 L30 86" stroke="var(--ink)" stroke-width="2.6" />
+      <path d="M90 26 L100 26 L100 86 L90 86" stroke="var(--ink)" stroke-width="2.6" />
+      <circle cx="40" cy="40" r="4" fill="var(--accent)" /><circle cx="60" cy="40" r="4" fill="var(--accent2)" /><circle cx="80" cy="40" r="4" fill="var(--accent)" />
+      <circle cx="40" cy="56" r="4" fill="var(--accent2)" /><circle cx="60" cy="56" r="4" fill="var(--accent)" /><circle cx="80" cy="56" r="4" fill="var(--accent2)" />
+      <circle cx="40" cy="72" r="4" fill="var(--accent)" /><circle cx="60" cy="72" r="4" fill="var(--accent2)" /><circle cx="80" cy="72" r="4" fill="var(--accent)" />
+    </g>
+  )}
+
+  {variant === 'linear-transform' && (
+    <g>
+      <g stroke="var(--ink-soft)" stroke-width="1.6" opacity="0.55">
+        <rect x="28" y="38" width="44" height="44" /><line x1="50" y1="38" x2="50" y2="82" /><line x1="28" y1="60" x2="72" y2="60" />
+      </g>
+      <g stroke="var(--accent)" stroke-width="2.4">
+        <path d="M44 38 L92 38 L76 82 L28 82 Z" />
+        <line x1="68" y1="38" x2="52" y2="82" /><line x1="36" y1="60" x2="84" y2="60" />
+      </g>
+    </g>
+  )}
+
+  {variant === 'box-plot' && (
+    <g>
+      <line x1="16" y1="56" x2="104" y2="56" stroke="var(--ink-soft)" stroke-width="2" />
+      <line x1="16" y1="49" x2="16" y2="63" stroke="var(--ink-soft)" stroke-width="2" />
+      <line x1="104" y1="49" x2="104" y2="63" stroke="var(--ink-soft)" stroke-width="2" />
+      <rect x="44" y="44" width="40" height="24" fill="var(--accent)" fill-opacity="0.22" stroke="var(--ink)" stroke-width="2.4" />
+      <line x1="64" y1="44" x2="64" y2="68" stroke="var(--accent2)" stroke-width="3" />
+    </g>
+  )}
+
+  {variant === 'venn' && (
+    <g>
+      <circle cx="48" cy="58" r="26" fill="var(--accent)" fill-opacity="0.26" stroke="var(--accent)" stroke-width="2.4" />
+      <circle cx="74" cy="58" r="26" fill="var(--accent2)" fill-opacity="0.26" stroke="var(--accent2)" stroke-width="2.4" />
+    </g>
+  )}
+
+  {variant === 'contours' && (
+    <g>
+      <ellipse cx="64" cy="56" rx="34" ry="24" stroke="var(--ink-soft)" stroke-width="1.6" opacity="0.6" />
+      <ellipse cx="64" cy="56" rx="23" ry="16" stroke="var(--accent)" stroke-width="2" />
+      <ellipse cx="64" cy="56" rx="12" ry="8" stroke="var(--accent)" stroke-width="2" />
+      <line x1="30" y1="26" x2="57" y2="49" stroke="var(--accent2)" stroke-width="2.6" />
+      <path d="M57 49 L48 48 M57 49 L53 56" stroke="var(--accent2)" stroke-width="2.6" />
+      <circle cx="64" cy="56" r="3.5" fill="var(--accent2)" />
     </g>
   )}
 </svg>
