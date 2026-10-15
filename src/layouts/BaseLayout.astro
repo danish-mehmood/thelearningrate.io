@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Breaking down the hard parts of machine learning, one sketch at a time.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-head">
+        <a class="brand" href="/">The Learning Rate</a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </nav>
+      </header>
+
+      <slot />
+
+      <footer class="site-foot">
+        <p>Hand-drawn ML explainers · built with Astro + rough.js.</p>
+      </footer>
+    </div>
+
+    <!-- Draw sketchy borders around anything marked [data-sketch-frame].
+         Runs client-side, redraws on resize and on light/dark change. -->
+    <script>
+      import rough from 'roughjs';
+
+      function cssVar(name: string) {
+        return (
+          getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#333'
+        );
+      }
+
+      function sketchFrames() {
+        document.querySelectorAll<HTMLElement>('[data-sketch-frame]').forEach((host) => {
+          let svg = host.querySelector<SVGSVGElement>(':scope > svg.sketch-border');
+          if (!svg) {
+            svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('class', 'sketch-border');
+            svg.setAttribute('preserveAspectRatio', 'none');
+            host.prepend(svg);
+          }
+          const w = host.clientWidth;
+          const h = host.clientHeight;
+          if (!w || !h) return;
+          svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+          svg.innerHTML = '';
+          const rc = rough.svg(svg);
+          svg.appendChild(
+            rc.rectangle(3, 3, w - 6, h - 6, {
+              stroke: cssVar('--ink-soft'),
+              strokeWidth: 1.6,
+              roughness: 1.8,
+              bowing: 1.5,
+            })
+          );
+        });
+      }
+
+      let t: number | undefined;
+      function schedule() {
+        window.clearTimeout(t);
+        t = window.setTimeout(sketchFrames, 150);
+      }
+
+      window.addEventListener('load', sketchFrames);
+      window.addEventListener('resize', schedule);
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sketchFrames);
+      }
+      // run once in case 'load' already fired
+      sketchFrames();
+    </script>
+  </body>
+</html>

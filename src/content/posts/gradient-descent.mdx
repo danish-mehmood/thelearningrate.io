@@ -1,0 +1,40 @@
+---
+title: How gradient descent finds the bottom
+description: Training a model is really just rolling downhill, over and over. Here's the picture behind the math.
+pubDate: 2026-10-15
+tags: ['optimization', 'intuition']
+---
+
+import LossCurve from '../../components/LossCurve.tsx';
+import Annotate from '../../components/Annotate.tsx';
+import Figure from '../../components/Figure.astro';
+import MarginNote from '../../components/MarginNote.astro';
+
+Training a model is mostly one idea repeated a few million times: look at how wrong you
+are, figure out which way is <Annotate client:visible type="underline">downhill</Annotate>,
+and take a small step that way. Do it enough and you slide into the valley.
+
+<Figure caption="Each step points down the steepest slope — big steps up high, tiny steps near the bottom.">
+  <LossCurve client:visible />
+</Figure>
+
+The curved line is the **loss** — a score for how wrong the model is. High up the walls
+means very wrong; the <Annotate client:visible type="circle">bottom</Annotate> of the bowl
+is as right as this model gets.
+
+<MarginNote>
+  <b>Why "small" steps?</b> Take too big a step and you overshoot the valley and bounce up
+  the far wall. That step size has a name you'll meet everywhere: the <b>learning rate</b>.
+</MarginNote>
+
+## The loop, in four moves
+
+<ol class="steps">
+  <li><b>Measure.</b> Run the data through the model and score how wrong it is. That score is the <span class="ink-accent">loss</span>.</li>
+  <li><b>Feel the slope.</b> The <span class="ink-blue">gradient</span> tells you which direction increases the loss fastest — so the opposite way is downhill.</li>
+  <li><b>Step.</b> Nudge every parameter a little in the downhill direction. How far is the learning rate.</li>
+  <li><b>Repeat</b> until the ground stops sloping — you've reached the bottom.</li>
+</ol>
+
+That's the whole engine. Everything fancier — momentum, Adam, schedulers — is just a
+smarter way to choose *which way* and *how far* to step.

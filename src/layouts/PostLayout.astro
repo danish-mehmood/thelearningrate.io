@@ -1,0 +1,32 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    tags?: string[];
+  };
+}
+const { frontmatter } = Astro.props;
+const date = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article>
+    <a class="back-link" href="/">← all explainers</a>
+    <div class="eyebrow" style="margin-top:14px;">
+      ML Explainers <span class="dot">·</span> breaking down the hard stuff
+    </div>
+    <h1>{frontmatter.title}</h1>
+    <p class="byline">{date}{frontmatter.tags?.length ? ' · ' + frontmatter.tags.join(' · ') : ''}</p>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

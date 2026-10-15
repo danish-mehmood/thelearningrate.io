@@ -1,0 +1,193 @@
+/* ============================================================
+   Hand-drawn / illustrated identity — the single source of truth.
+   Layout concept: a page torn from a dot-grid notebook.
+   Change the tokens below and the whole blog follows.
+   ============================================================ */
+:root {
+  --bg: #f6f0e3;         /* warm paper            */
+  --panel: #fffdf6;      /* card paper            */
+  --ink: #2c2823;        /* pencil-black          */
+  --ink-soft: #7a6f5d;   /* faded pencil          */
+  --accent: #cf6336;     /* terracotta            */
+  --accent2: #3a7ca5;    /* ink blue              */
+  --line: #d9ccb2;       /* grid / hairline       */
+
+  --maxw: 680px;
+  --font-display: "Caveat", "Segoe Print", cursive;
+  --font-hand: "Patrick Hand", "Comic Sans MS", cursive;
+  --font-body: "Nunito", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1e1b16;
+    --panel: #26221d;
+    --ink: #ece3d1;
+    --ink-soft: #a89a82;
+    --accent: #e8824f;
+    --accent2: #74b2d8;
+    --line: #3a342a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1e1b16;
+  --panel: #26221d;
+  --ink: #ece3d1;
+  --ink-soft: #a89a82;
+  --accent: #e8824f;
+  --accent2: #74b2d8;
+  --line: #3a342a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--line) 1.1px, transparent 1.2px);
+  background-size: 22px 22px;
+  background-position: -11px -11px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: max(18px, env(safe-area-inset-left, 0px));
+  padding-right: max(18px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(28px, 7vw, 64px);
+}
+
+/* ---- site header ---- */
+.site-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.site-head a.brand {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 700; color: var(--ink);
+  text-decoration: none; transform: rotate(-1.5deg); display: inline-block;
+}
+.site-head nav { display: flex; gap: 16px; font-family: var(--font-hand); }
+.site-head nav a { color: var(--ink-soft); text-decoration: none; }
+.site-head nav a:hover { color: var(--accent); }
+
+/* ---- type ---- */
+.eyebrow {
+  font-family: var(--font-hand);
+  letter-spacing: .04em; color: var(--accent); font-size: 1.05rem;
+  display: inline-flex; align-items: center; gap: .5ch; transform: rotate(-1.2deg);
+}
+.eyebrow .dot { color: var(--ink-soft); }
+
+h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.4rem, 8.5vw, 3.8rem); line-height: 1.03;
+  margin: .25em 0 .3em; text-wrap: balance; letter-spacing: .01em;
+}
+h2 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.1;
+  margin: 2.2em 0 .4em; text-wrap: balance;
+}
+h3 { font-family: var(--font-hand); font-size: 1.4rem; margin: 1.8em 0 .3em; }
+p { margin: 0 0 1.15em; }
+a { color: var(--accent); text-underline-offset: 3px; }
+.lede { font-size: 1.18rem; }
+.byline { font-family: var(--font-hand); color: var(--ink-soft); margin-bottom: 1.6em; }
+
+/* inline emphasis helpers */
+.ink-accent { color: var(--accent); font-weight: 700; }
+.ink-blue { color: var(--accent2); font-weight: 700; }
+
+/* ---- prose rhythm for MDX body ---- */
+.prose :where(ul, ol) { padding-left: 1.3em; margin: 0 0 1.15em; }
+.prose li { margin-bottom: .4em; }
+.prose code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .92em;
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  padding: .1em .4em; border-radius: 5px;
+}
+.prose pre {
+  background: var(--panel); border: 1.5px solid var(--line);
+  border-radius: 10px; padding: 16px; overflow-x: auto;
+}
+.prose pre code { background: none; padding: 0; }
+.prose blockquote {
+  margin: 1.4em 0; padding: 2px 18px; border-left: 3px dashed var(--accent);
+  color: var(--ink-soft); font-style: italic;
+}
+
+/* ---- figure card with sketched border ---- */
+.figure {
+  position: relative; background: var(--panel); border-radius: 10px;
+  padding: 18px 16px 10px; margin: 1.8em 0 1.4em;
+  box-shadow: 0 10px 28px -20px rgba(0,0,0,.5);
+}
+.figcap {
+  font-family: var(--font-hand); color: var(--ink-soft);
+  font-size: 1rem; text-align: center; margin: 10px 4px 4px;
+}
+
+/* ---- margin note ---- */
+.margin-note {
+  position: relative; font-family: var(--font-hand);
+  font-size: 1.04rem; line-height: 1.5; color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  padding: 16px 18px; margin: 1.6em 0; border-radius: 8px; transform: rotate(-.4deg);
+}
+.margin-note b { color: var(--accent); }
+
+/* sketched border overlay (injected by script) */
+.sketch-border {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible; pointer-events: none;
+}
+
+/* ---- numbered steps ---- */
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 1em 0 0; }
+.steps li { position: relative; padding-left: 52px; margin-bottom: 1.1em; }
+.steps li::before {
+  counter-increment: s; content: counter(s);
+  position: absolute; left: 0; top: -2px; width: 36px; height: 36px;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+  color: var(--panel); background: var(--accent2);
+  border-radius: 50% 48% 52% 50% / 50% 52% 48% 50%;
+  display: grid; place-items: center; transform: rotate(-4deg);
+}
+
+/* ---- post list (home) ---- */
+.post-list { list-style: none; padding: 0; margin: 1.4em 0 0; display: grid; gap: 22px; }
+.post-card {
+  position: relative; background: var(--panel); border-radius: 10px;
+  padding: 20px 22px; box-shadow: 0 10px 28px -22px rgba(0,0,0,.5);
+}
+.post-card a.card-title {
+  font-family: var(--font-display); font-size: 1.9rem; line-height: 1.05;
+  color: var(--ink); text-decoration: none; display: inline-block;
+}
+.post-card a.card-title:hover { color: var(--accent); }
+.post-card .meta { font-family: var(--font-hand); color: var(--ink-soft); font-size: .98rem; margin-top: 4px; }
+.post-card p { margin: 8px 0 0; }
+.tag {
+  display: inline-block; font-family: var(--font-hand); font-size: .9rem;
+  border: 1.5px solid var(--line); border-radius: 14px; padding: 1px 10px;
+  color: var(--ink-soft); margin: 10px 6px 0 0;
+}
+
+/* ---- footer ---- */
+footer.site-foot {
+  margin-top: 3.4em; border-top: 2px dashed var(--line); padding-top: 1.2em;
+  font-family: var(--font-hand); color: var(--ink-soft); font-size: .98rem;
+}
+
+.back-link { font-family: var(--font-hand); color: var(--ink-soft); text-decoration: none; }
+.back-link:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
