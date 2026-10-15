@@ -2,6 +2,7 @@
 // The Learning Rate mark: a hand-drawn probability distribution —
 // density bars under a sketchy bell curve, with a dot at the mode.
 // Colors come from CSS tokens, so it follows light/dark automatically.
+// Animates in on load; gently "resamples" on hover (see styles below).
 interface Props {
   height?: number;
   class?: string;
@@ -11,7 +12,7 @@ const width = Math.round((height * 68) / 48);
 ---
 
 <svg
-  class={className}
+  class:list={['tlr-logo', className]}
   width={width}
   height={height}
   viewBox="0 0 68 48"
@@ -23,31 +24,98 @@ const width = Math.round((height * 68) / 48);
 >
   <!-- density bars (the "probability mass") -->
   <g stroke="var(--accent)" stroke-width="2.8" opacity="0.5">
-    <line x1="16" y1="40" x2="16" y2="37" />
-    <line x1="22" y1="40" x2="22" y2="29" />
-    <line x1="28" y1="40" x2="28" y2="18.5" />
-    <line x1="34" y1="40" x2="34" y2="13" />
-    <line x1="40" y1="40" x2="40" y2="18.5" />
-    <line x1="46" y1="40" x2="46" y2="29" />
-    <line x1="52" y1="40" x2="52" y2="37" />
+    <line class="tlr-bar" x1="16" y1="40" x2="16" y2="37" />
+    <line class="tlr-bar" x1="22" y1="40" x2="22" y2="29" />
+    <line class="tlr-bar" x1="28" y1="40" x2="28" y2="18.5" />
+    <line class="tlr-bar" x1="34" y1="40" x2="34" y2="13" />
+    <line class="tlr-bar" x1="40" y1="40" x2="40" y2="18.5" />
+    <line class="tlr-bar" x1="46" y1="40" x2="46" y2="29" />
+    <line class="tlr-bar" x1="52" y1="40" x2="52" y2="37" />
   </g>
 
   <!-- the bell curve, drawn twice with a tiny offset for a sketchy feel -->
   <path
+    class="tlr-bell"
     d="M8 40 C 20 40 23 13 34 11 C 45 13 48 40 60 40"
     stroke="var(--ink)"
     stroke-width="3"
   />
   <path
+    class="tlr-bell2"
     d="M9 40.4 C 21 39.3 24 14.6 34 12.2 C 44 14.4 47 39.2 59 40.3"
     stroke="var(--ink)"
     stroke-width="1.7"
-    opacity="0.55"
   />
 
   <!-- wavy baseline -->
   <path d="M6 40 Q 20 41.2 34 39.7 T 62 40" stroke="var(--ink-soft)" stroke-width="2.2" />
 
   <!-- the mode (a little "learning rate" ball at the peak) -->
-  <circle cx="34" cy="11" r="3.8" fill="var(--accent2)" stroke="var(--bg)" stroke-width="1.3" />
+  <circle class="tlr-dot" cx="34" cy="11" r="3.8" fill="var(--accent2)" stroke="var(--bg)" stroke-width="1.3" />
 </svg>
+
+<style>
+  /* ---- entrance (plays once on load) ---- */
+  .tlr-bar {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    transform: scaleY(0);
+    animation: tlr-rise 0.5s cubic-bezier(0.3, 1.3, 0.5, 1) both;
+  }
+  .tlr-bar:nth-child(1) { animation-delay: 0.05s; }
+  .tlr-bar:nth-child(2) { animation-delay: 0.1s; }
+  .tlr-bar:nth-child(3) { animation-delay: 0.15s; }
+  .tlr-bar:nth-child(4) { animation-delay: 0.2s; }
+  .tlr-bar:nth-child(5) { animation-delay: 0.25s; }
+  .tlr-bar:nth-child(6) { animation-delay: 0.3s; }
+  .tlr-bar:nth-child(7) { animation-delay: 0.35s; }
+
+  .tlr-bell {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: tlr-draw 0.9s ease forwards;
+  }
+  .tlr-bell2 {
+    opacity: 0;
+    animation: tlr-fade 0.5s ease 0.6s forwards;
+  }
+  .tlr-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0);
+    animation: tlr-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) 0.7s both;
+  }
+
+  @keyframes tlr-rise { to { transform: scaleY(1); } }
+  @keyframes tlr-draw { to { stroke-dashoffset: 0; } }
+  @keyframes tlr-fade { to { opacity: 0.55; } }
+  @keyframes tlr-pop { to { transform: scale(1); } }
+
+  /* ---- hover: the distribution "resamples" ---- */
+  :global(.brand):hover .tlr-dot,
+  .tlr-logo:hover .tlr-dot {
+    animation: tlr-bob 1.4s ease-in-out infinite;
+  }
+  :global(.brand):hover .tlr-bar,
+  .tlr-logo:hover .tlr-bar {
+    animation: tlr-wiggle 1.1s ease-in-out infinite;
+  }
+  :global(.brand):hover .tlr-bar:nth-child(even),
+  .tlr-logo:hover .tlr-bar:nth-child(even) { animation-delay: 0.18s; }
+
+  @keyframes tlr-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2.5px); }
+  }
+  @keyframes tlr-wiggle {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.14); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tlr-bar { transform: scaleY(1); animation: none; }
+    .tlr-bell { stroke-dashoffset: 0; animation: none; }
+    .tlr-bell2 { opacity: 0.55; animation: none; }
+    .tlr-dot { transform: scale(1); animation: none; }
+  }
+</style>
